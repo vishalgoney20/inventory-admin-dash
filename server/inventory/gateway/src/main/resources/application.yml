@@ -1,0 +1,42 @@
+server:
+  port: 8080  # API Gateway will listen on port 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000" # Your React app’s origin
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: product-catalog-service
+          uri: http://product-catalog-service:8081
+          predicates:
+            - Path=/product/**
+
+        - id: inventory-service
+          uri: http://inventory-service:8082
+          predicates:
+            - Path=/inventory/**
+
+
+# Enable actuator endpoints for debugging
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway, health, info
+  endpoint:
+    gateway:
+      enabled: true
+
+#curl -X GET http://localhost:8080/actuator/gateway/routes

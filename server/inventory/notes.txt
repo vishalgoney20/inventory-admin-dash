@@ -1,0 +1,12 @@
+To run all at once
+- mvn clean install && mvn spring-boot:run -pl gateway,inventory-service,product-catalog-service
+
+docker compose -f docker-compose-db.yml up -d
+
+docker compose -f docker-compose.yml up --build
+
+mvn clean spring-boot:run
+
+docker exec -it mongo mongosh
+
+docker ps

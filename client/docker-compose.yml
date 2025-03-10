@@ -1,0 +1,9 @@
+# version: "3.8"
+services:
+  admin-dashboard:
+    build: .
+    container_name: admin-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - PRODUCT_DATASOURCE_URL=http://localhost:8080
